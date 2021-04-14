@@ -6,7 +6,6 @@ if (module.hot) {
 }
 
 const App: FC = () => {
-
   const [val, setVal] = useState(1)
 
   return <>{'Hello From React!'}{val}

@@ -2,12 +2,7 @@ import { resolve } from 'path';
 import { Configuration } from "webpack"
 import nodeExternals from 'webpack-node-externals'
 import NodemonPlugin from 'nodemon-webpack-plugin'
-import DotenvPlugin from 'dotenv-webpack'
-import dotenv from 'dotenv'
-
-const {
-	BASE_PROTOCOL, BASE_DOMAIN, BASE_PORT
-} = dotenv.config().parsed!
+import { envCfg } from './src/server/config'
 
 const config: Configuration = {
 	mode: 'development',
@@ -20,11 +15,9 @@ const config: Configuration = {
 		path: resolve('./dist/server')
 	},
 	plugins: [
-		// @ts-expect-error incompat dotenv with compiler
-		new DotenvPlugin(),
 		new NodemonPlugin({
 			events: {
-				start: `yarn open-cli ${BASE_PROTOCOL}://${BASE_DOMAIN}:${BASE_PORT}`
+				start: `yarn open-cli ${envCfg.BASE_PROTOCOL}://${envCfg.BASE_DOMAIN}:${envCfg.BASE_PORT}`
 			}
 		})		
 	],
